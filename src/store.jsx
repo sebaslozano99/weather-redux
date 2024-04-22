@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import  mainCitySlice  from "./mainCitySlice";
+import  mainCitySlice  from "./features/mainCitySlice";
+import otherCities from "./features/otherCities";
 
 const store = configureStore({
     reducer: {
         mainCity: mainCitySlice,
+        otherCities: otherCities,
     }
 })
 

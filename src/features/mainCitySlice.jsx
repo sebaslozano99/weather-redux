@@ -18,32 +18,16 @@ export const getMainCityInfo = createAsyncThunk("mainCity/getInfo", async (cityN
 })
 
 
+
 const mainCitySlice = createSlice({
     name: "mainCity",
     initialState: initialValues,
     reducers: {
-        // isLoading(state){
-        //     state.isLoading = true;
-        // },
-        // arrivedData(state, action){
-        //     state.isLoading = false;
-        //     state.cityInfo = action.payload;
-        // },
         changeCity(state, action){
             state.cityName = action.payload;
         },
     },
     extraReducers: (builder) => {
-        // [getMainCityInfo.pending]:(state) => {
-        //     state.isLoading = true;
-        // },
-        // [getMainCityInfo.fulfilled]: (state, action) => {
-        //     state.isLoading = false;
-        //     state.cityInfo = action.payload;
-        // },
-        // [getMainCityInfo.rejected]: (state) => {
-        //     state.isLoading = false;
-        // }
         builder.addCase(getMainCityInfo.pending, (state) => {
             state.isLoading = true;
         }),

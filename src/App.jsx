@@ -1,7 +1,10 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom"
-import HomePage from "./HomePage"
-import MainCity from "./MainCity"
-import Header from "./Header"
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+// import { Suspense, lazy } from "react";
+
+import Header from "./ui/Header";
+
+import HomePage from "./ui/HomePage";
+import MainCity from "./features/MainCity";
 
 
 
