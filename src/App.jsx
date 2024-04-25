@@ -5,17 +5,20 @@ import Header from "./ui/Header";
 
 import HomePage from "./ui/HomePage";
 import MainCity from "./features/MainCity";
+import { TempContext } from "./contexts/TempContext";
 
 
 
 const App = () => {
   return (
     <BrowserRouter>
-      <Header />
-      <Routes>
-        <Route path="/" element={ <HomePage /> } />
-        <Route path="mainCity" element={ <MainCity /> } />
-      </Routes>
+      <TempContext>
+        <Header />
+        <Routes>
+            <Route path="/" element={ <HomePage /> } />
+            <Route path="mainCity" element={ <MainCity /> } />
+        </Routes>
+      </TempContext>
     </BrowserRouter>
   )
 }

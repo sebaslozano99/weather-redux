@@ -28,11 +28,14 @@ const otherCities = createSlice({
     name: "otherCities",
     initialState: initialValues,
     reducers: {
+        add(state, action){
+            state.cities.push(action.payload); 
+        },
         changeOneCity(state, action){
-            state.otherCities = state.otherCities.map(element => element === action.payload.city ? action.payload.newCity : element);
+            state.cities = state.cities.map(element => element === action.payload.city ? action.payload.newCity : element);
         },
         deleteCity(state, action){
-            state.otherCities = state.otherCities.filter(element => element === action.payload);
+            state.cities = state.cities.filter(element => element === action.payload);
         }
     },
     extraReducers: (builder) => {
@@ -52,4 +55,4 @@ const otherCities = createSlice({
 
 
 export default otherCities.reducer;
-export const { changeOneCity, deleteCity } = otherCities.actions;
+export const { add, changeOneCity, deleteCity } = otherCities.actions;

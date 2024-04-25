@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { UseTempContext } from "../contexts/TempContext";
 
 
 
@@ -35,6 +36,9 @@ const CityCardReusable = ({cityInfo, isLoading, tempType, countryType, titleType
     smallSpinner: "border-8 border-yellow-600 border-x-transparent w-[100px] h-[100px] rounded-[50%] animate-spin",
   }
 
+  const { temperatureType } = UseTempContext();
+  const rightTempType = temperatureType ? (cityInfo?.main?.temp - 273.15).toFixed(2) : ((cityInfo?.main?.temp - 273.15) * 9/5 + 32).toFixed(2);
+
 
   return (
     < >
@@ -55,7 +59,7 @@ const CityCardReusable = ({cityInfo, isLoading, tempType, countryType, titleType
 
                 <div className="w-[60%] flex flex-col items-center justify-center">
                     <h2 className={styles[countryType]} >{cityInfo?.name} - {cityInfo?.sys?.country}</h2>
-                    <p className={styles[tempType]} >{(cityInfo?.main?.temp - 273.15).toFixed(2)}°C</p>
+                    <p className={styles[tempType]} >{rightTempType} {temperatureType ? "°C" : "°F"}</p>
                 </div>
             </div>
 
