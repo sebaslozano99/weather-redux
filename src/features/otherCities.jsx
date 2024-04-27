@@ -9,7 +9,7 @@ const initialValues = {
 
 
 export const getOtherCities = createAsyncThunk("otherCities/fetchInfo", async (cities) => {
-    const weatherInfoCities = [];
+    let weatherInfoCities = [];
     for(let i = 0; i < cities.length; i++){
         try{
             const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cities[i]}&appid=777755690ecb518be7c3410d5ae34b00`);
@@ -29,7 +29,7 @@ const otherCities = createSlice({
     initialState: initialValues,
     reducers: {
         add(state, action){
-            state.cities.push(action.payload); 
+            state.cities.push(action.payload);
         },
         changeOneCity(state, action){
             state.cities = state.cities.map(element => element === action.payload.city ? action.payload.newCity : element);
@@ -43,7 +43,7 @@ const otherCities = createSlice({
             state.isLoading = true;
         }),
         builder.addCase(getOtherCities.fulfilled, (state, action) => {
-            state.citiesInfo = [...state.citiesInfo, action.payload];
+            state.citiesInfo = action.payload;
             state.isLoading = false;
         }),
         builder.addCase(getOtherCities.rejected, (state) => {

@@ -1,12 +1,25 @@
 import PropTypes from "prop-types";
 import { UseTempContext } from "../contexts/TempContext";
-
+import Spinner from "./Spinner";
+import { useDispatch, useSelector } from "react-redux";
+import { add } from "../features/otherCities";
 
 
 const shortCut = "../public/";
 const weatherCodes = ["01d", "01n", "02d", "02n", "03d", "03n", "04d", "04n", "09d", "09n", "10d", "10n", "11d", "11n", "13d", "13n", "50d", "50n"];
 
 const imagesCodes = [`${shortCut}clearDay.png`, `${shortCut}clearNight.png`, `${shortCut}clouds.png`, `${shortCut}clouds.png`, `${shortCut}clouds.png`, `${shortCut}clouds.png`, `${shortCut}clouds.png`, `${shortCut}clouds.png`, `${shortCut}rain.png`, `${shortCut}rain.png`, `${shortCut}rain.png`, `${shortCut}rain.png`, `${shortCut}thunderStorm.png`, `${shortCut}thunderStorm.png`, `${shortCut}snow.png`, `${shortCut}snow.png`, `${shortCut}hazeDay.png`, `${shortCut}hazeNight.png`];
+
+const styles = {
+    bigCardTemp: "text-[3em] text-center font-semibold",
+    smallCardTemp: "text-[1.4em] text-center font-semibold",
+    bigCityCountry: "text-5xl text-center font-thin mb-4",
+    smallCityCountry: "text-xl text-center font-thin mb-4",
+    bigTitle: "text-center font-semibold text-2xl",
+    smallTitle: "text-center font-semibold text-mds",
+    bigDesc: "text-center text-xl font-thin",
+    smallDesc: "text-center text-sm font-thin",
+  }
 
 
 function getRightImageBasedCode(codeId, codesArray, imagesArray){
@@ -21,23 +34,23 @@ function getRightImageBasedCode(codeId, codesArray, imagesArray){
 
 }
 
-const CityCardReusable = ({cityInfo, isLoading, tempType, countryType, titleType, descType, spinnerType}) => {
+const CityCardReusable = ({cityInfo, isLoading, tempType, countryType, titleType, descType, spinnerType, addBtn = false}) => {
 
-  const styles = {
-    bigCardTemp: "text-[3em] text-center font-semibold",
-    smallCardTemp: "text-[1.4em] text-center font-semibold",
-    bigCityCountry: "text-5xl text-center font-thin mb-4",
-    smallCityCountry: "text-xl text-center font-thin mb-4",
-    bigTitle: "text-center font-semibold text-2xl",
-    smallTitle: "text-center font-semibold text-mds",
-    bigDesc: "text-center text-xl font-thin",
-    smallDesc: "text-center text-sm font-thin",
-    bigSpinner: "border-8 border-yellow-600 border-x-transparent w-[300px] h-[300px] rounded-[50%] animate-spin",
-    smallSpinner: "border-8 border-yellow-600 border-x-transparent w-[100px] h-[100px] rounded-[50%] animate-spin",
-  }
 
-  const { temperatureType } = UseTempContext();
+
+  const { temperatureType, theme } = UseTempContext();
+  const otherCities = useSelector((store) => store.otherCities);
   const rightTempType = temperatureType ? (cityInfo?.main?.temp - 273.15).toFixed(2) : ((cityInfo?.main?.temp - 273.15) * 9/5 + 32).toFixed(2);
+  const dispatch = useDispatch();
+
+  function handleAddToList(){
+    if(!otherCities.cities.includes(cityInfo.name)){
+        dispatch(add(cityInfo.name));
+    }
+    else{
+        alert(`${cityInfo.name} is already in your list!`);
+    }
+  }
 
 
   return (
@@ -45,14 +58,15 @@ const CityCardReusable = ({cityInfo, isLoading, tempType, countryType, titleType
         { 
 
         isLoading ? 
-            <div className="w-full h-screen grid place-items-center" >
-                <div className={styles[spinnerType]} ></div>
-            </div>
+            <Spinner spinnerType={spinnerType} />
 
         :
 
         <>
+       { addBtn && <button className={`${theme ? "bg-white text-black" : "bg-[#252525] text-white"} w-6 h-6 rounded-[50%] absolute top-0 right-0 m-2 opacity-50 hover:opacity-100 transition-opacity ease-in duration-300`}  onClick={handleAddToList} >+</button>}
+
             <div className="w-full h-[40%] flex">
+
                 <div className="w-[40%] flex items-center justify-center p-4">
                     <img src={getRightImageBasedCode(cityInfo?.weather?.at(0)?.icon, weatherCodes, imagesCodes)} />
                 </div>
@@ -99,4 +113,5 @@ CityCardReusable.propTypes = {
     titleType: PropTypes.string,
     descType: PropTypes.string,
     spinnerType: PropTypes.string,
+    addBtn: PropTypes.bool,
 }

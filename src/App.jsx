@@ -3,13 +3,17 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Header from "./ui/Header";
 
-import HomePage from "./ui/HomePage";
+import HomePage from "./pages/HomePage";
 import MainCity from "./features/MainCity";
 import { TempContext } from "./contexts/TempContext";
+import Account from "./pages/Account";
+
 
 
 
 const App = () => {
+
+
   return (
     <BrowserRouter>
       <TempContext>
@@ -17,6 +21,7 @@ const App = () => {
         <Routes>
             <Route path="/" element={ <HomePage /> } />
             <Route path="mainCity" element={ <MainCity /> } />
+            <Route path="account" element={ <Account /> } />
         </Routes>
       </TempContext>
     </BrowserRouter>

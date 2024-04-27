@@ -12,7 +12,6 @@ const Header = () => {
   const [displaySearchBar, setDisplaySearchBar] = useState(false);
   const { onChangeTempType, temperatureType, onChangeTheme, theme } = UseTempContext();
   const dispatch = useDispatch();
-  console.log(theme);
 
   function onSubmit(e){
     e.preventDefault();
@@ -44,7 +43,7 @@ const Header = () => {
         </div>
 
 
-        <div className={`bg-black w-[8em] h-auto py-4 px-2 rounded-xl absolute top-[10vh] flex flex-col items-center gap-2 shadow-md shadow-black transition-all ease-in-out duration-300 ${isOpen ? "left-0" : "left-[-100%]"}`} >
+        <div className={`bg-black w-[8em] h-auto py-4 px-2 rounded-xl absolute top-[10vh] z-10 flex flex-col items-center gap-2 shadow-md shadow-black transition-all ease-in-out duration-300 ${isOpen ? "left-0" : "left-[-100%]"}`} >
 
           <button className="bg-white w-[80%] rounded-xl" onClick={onChangeTheme} >{theme ? "light" : "dark"}</button>
           <button className="bg-white w-[80%] rounded-xl" onClick={onChangeTempType} >{temperatureType ? "°F" : "°C"}</button>
