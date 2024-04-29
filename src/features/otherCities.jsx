@@ -44,6 +44,7 @@ const otherCities = createSlice({
         }),
         builder.addCase(getOtherCities.fulfilled, (state, action) => {
             state.citiesInfo = action.payload;
+            // state.citiesInfo = [...state.citiesInfo, action.payload]; I had it like this, but I was duplicating the data
             state.isLoading = false;
         }),
         builder.addCase(getOtherCities.rejected, (state) => {

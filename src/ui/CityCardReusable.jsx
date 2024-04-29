@@ -1,14 +1,9 @@
 import PropTypes from "prop-types";
 import { UseTempContext } from "../contexts/TempContext";
 import Spinner from "./Spinner";
-import { useDispatch, useSelector } from "react-redux";
-import { add } from "../features/otherCities";
+import { Link } from "react-router-dom";
+import getRightImageBasedCode from "../utilities/getRightWeatherImg";
 
-
-const shortCut = "../public/";
-const weatherCodes = ["01d", "01n", "02d", "02n", "03d", "03n", "04d", "04n", "09d", "09n", "10d", "10n", "11d", "11n", "13d", "13n", "50d", "50n"];
-
-const imagesCodes = [`${shortCut}clearDay.png`, `${shortCut}clearNight.png`, `${shortCut}clouds.png`, `${shortCut}clouds.png`, `${shortCut}clouds.png`, `${shortCut}clouds.png`, `${shortCut}clouds.png`, `${shortCut}clouds.png`, `${shortCut}rain.png`, `${shortCut}rain.png`, `${shortCut}rain.png`, `${shortCut}rain.png`, `${shortCut}thunderStorm.png`, `${shortCut}thunderStorm.png`, `${shortCut}snow.png`, `${shortCut}snow.png`, `${shortCut}hazeDay.png`, `${shortCut}hazeNight.png`];
 
 const styles = {
     bigCardTemp: "text-[3em] text-center font-semibold",
@@ -22,36 +17,13 @@ const styles = {
   }
 
 
-function getRightImageBasedCode(codeId, codesArray, imagesArray){
-    let rightIndex;
-
-    for(let i = 0; i < codesArray.length; i++){
-        if(codesArray[i] === codeId){
-            rightIndex = i;
-        }
-    }
-    return imagesArray[rightIndex];
-
-}
-
-const CityCardReusable = ({cityInfo, isLoading, tempType, countryType, titleType, descType, spinnerType, addBtn = false}) => {
+const CityCardReusable = ({cityInfo, isLoading, tempType, countryType, titleType, descType, spinnerType, addBtn = false, handleAddToList}) => {
 
 
 
   const { temperatureType, theme } = UseTempContext();
-  const otherCities = useSelector((store) => store.otherCities);
   const rightTempType = temperatureType ? (cityInfo?.main?.temp - 273.15).toFixed(2) : ((cityInfo?.main?.temp - 273.15) * 9/5 + 32).toFixed(2);
-  const dispatch = useDispatch();
-
-  function handleAddToList(){
-    if(!otherCities.cities.includes(cityInfo.name)){
-        dispatch(add(cityInfo.name));
-    }
-    else{
-        alert(`${cityInfo.name} is already in your list!`);
-    }
-  }
-
+  const feelsLikeRightTempType = temperatureType ? (cityInfo?.main?.feels_like - 273.15).toFixed(2) : ((cityInfo?.main?.feels_like - 273.15) * 9/5 + 32).toFixed(2);
 
   return (
     < >
@@ -68,11 +40,13 @@ const CityCardReusable = ({cityInfo, isLoading, tempType, countryType, titleType
             <div className="w-full h-[40%] flex">
 
                 <div className="w-[40%] flex items-center justify-center p-4">
-                    <img src={getRightImageBasedCode(cityInfo?.weather?.at(0)?.icon, weatherCodes, imagesCodes)} />
+                    <img src={getRightImageBasedCode(cityInfo?.weather?.at(0)?.icon)} />
                 </div>
 
                 <div className="w-[60%] flex flex-col items-center justify-center">
-                    <h2 className={styles[countryType]} >{cityInfo?.name} - {cityInfo?.sys?.country}</h2>
+                    <h2>
+                        <Link to={`${cityInfo?.id}`} className={styles[countryType]} >{cityInfo?.name} - {cityInfo?.sys?.country}</Link>
+                    </h2>
                     <p className={styles[tempType]} >{rightTempType} {temperatureType ? "°C" : "°F"}</p>
                 </div>
             </div>
@@ -88,7 +62,7 @@ const CityCardReusable = ({cityInfo, isLoading, tempType, countryType, titleType
                     <p className={styles[titleType]} >Description</p>
                 </div>
                 <div>
-                    <h3 className={styles[descType]} >{(cityInfo?.main?.feels_like - 273.15).toFixed(2)}°C</h3>
+                    <h3 className={styles[descType]} >{feelsLikeRightTempType} {tempType ? "°C" : "°F"}</h3>
                     <p className={styles[titleType]} >Feels Like</p>
                 </div>
                 <div>
@@ -114,4 +88,5 @@ CityCardReusable.propTypes = {
     descType: PropTypes.string,
     spinnerType: PropTypes.string,
     addBtn: PropTypes.bool,
+    handleAddToList: PropTypes.func,
 }

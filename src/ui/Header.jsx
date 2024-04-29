@@ -66,7 +66,7 @@ const Header = () => {
       <nav>
         <ul  className={`flex gap-6 ${theme ? "text-white" : "text-black"}`}>
             <li>
-                <Link to="mainCity" onClick={() => setDisplaySearchBar(true)} >Main City</Link>
+                <Link to="search" onClick={() => setDisplaySearchBar(true)} >Search</Link>
             </li>
             <li>
                 <Link to="account" onClick={() => setDisplaySearchBar(false)} >Account</Link>
