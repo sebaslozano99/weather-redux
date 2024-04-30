@@ -5,7 +5,11 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      gridTemplateColumns: {
+        'auto': 'repeat(auto-fit, minmax(300px, 1fr))',
+      }
+    },
     fontFamily: {
       sans: "Oswald",
     }

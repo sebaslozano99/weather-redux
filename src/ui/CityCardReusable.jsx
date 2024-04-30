@@ -6,13 +6,13 @@ import getRightImageBasedCode from "../utilities/getRightWeatherImg";
 
 
 const styles = {
-    bigCardTemp: "text-[3em] text-center font-semibold",
+    bigCardTemp: "text-[3em] text-center font-semibold max-[1000px]:text-[2.5em] max-[800px]:text-[3em]",
     smallCardTemp: "text-[1.4em] text-center font-semibold",
-    bigCityCountry: "text-5xl text-center font-thin mb-4",
+    bigCityCountry: "text-5xl text-center font-thin mb-4 max-[1000px]:text-4xl max-[800px]:text-5xl",
     smallCityCountry: "text-xl text-center font-thin mb-4",
-    bigTitle: "text-center font-semibold text-2xl",
+    bigTitle: "text-center font-semibold text-2xl max-[1000px]:text-xl max-[800px]:text-2xl",
     smallTitle: "text-center font-semibold text-mds",
-    bigDesc: "text-center text-xl font-thin",
+    bigDesc: "text-center text-xl font-thin max-[1000px]:text-lg max-[800px]:text-xl",
     smallDesc: "text-center text-sm font-thin",
   }
 
@@ -40,7 +40,7 @@ const CityCardReusable = ({cityInfo, isLoading, tempType, countryType, titleType
             <div className="w-full h-[40%] flex">
 
                 <div className="w-[40%] flex items-center justify-center p-4">
-                    <img src={getRightImageBasedCode(cityInfo?.weather?.at(0)?.icon)} />
+                    <img src={getRightImageBasedCode(cityInfo?.weather?.at(0)?.icon)} className="max-[800px]:w-[80%] max-[701px]:w-[70%]" />
                 </div>
 
                 <div className="w-[60%] flex flex-col items-center justify-center">
