@@ -8,6 +8,7 @@ import { TempContext } from "./contexts/TempContext";
 import Account from "./pages/Account";
 import Search from "./pages/Search";
 import Details from "./pages/Details";
+import { SuggestionsContext } from "./contexts/SuggestionsContext";
 
 
 
@@ -18,13 +19,15 @@ const App = () => {
   return (
     <BrowserRouter>
       <TempContext>
-        <Header />
-        <Routes>
-            <Route path="/" element={ <HomePage /> } />
-            <Route path="search" element={ <Search /> } />
-            <Route path="search/:id" element={ <Details /> } />
-            <Route path="account" element={ <Account /> } />
-        </Routes>
+        <SuggestionsContext>
+          <Header />
+          <Routes>
+              <Route path="/" element={ <HomePage /> } />
+              <Route path="search" element={ <Search /> } />
+              <Route path="search/:id" element={ <Details /> } />
+              <Route path="account" element={ <Account /> } />
+          </Routes>
+        </SuggestionsContext>
       </TempContext>
     </BrowserRouter>
   )

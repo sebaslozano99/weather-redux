@@ -3,21 +3,35 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { changeCity } from "../features/mainCitySlice";
 import { UseTempContext } from "../contexts/TempContext";
+import { UseSuggestions } from "../contexts/SuggestionsContext";
 
 
 const Header = () => {
 
   const [isOpen, setIsOpen] = useState(false);
-  const [city, setCity] = useState("");
+  // const [city, setCity] = useState("");
   const [displaySearchBar, setDisplaySearchBar] = useState(false);
   const { onChangeTempType, temperatureType, onChangeTheme, theme } = UseTempContext();
+  const { suggestions, setSuggestions, usersCity, setUsersCity } = UseSuggestions();
   const dispatch = useDispatch();
+
+
+  console.log(suggestions, usersCity)
+
 
   function onSubmit(e){
     e.preventDefault();
-    if(!city) return;
-    dispatch(changeCity(city));
-    setCity("");
+    if(!usersCity) return;
+    dispatch(changeCity(usersCity));
+    setUsersCity("");
+    setSuggestions([]);
+  }
+
+  function onClickChangeCity(){
+    if(!usersCity) return;
+    dispatch(changeCity(usersCity));
+    setUsersCity("");
+    setSuggestions([]);
   }
 
   function handleOpenBurger(){
@@ -58,7 +72,18 @@ const Header = () => {
       </div>
 
     {displaySearchBar &&  <form className="flex gap-2" onSubmit={(e) => onSubmit(e)} >
-        <input type="text" placeholder="gatlinburg"  className="w-[20em] p-[5px] rounded-md outline-none" value={city} onChange={(e) => setCity(e.target.value)} />
+
+        <div >
+
+          <input type="text" placeholder="gatlinburg"  className="w-[20em] p-[5px] rounded-md outline-none relative border-[1px] border-black/50" value={usersCity} onChange={(e) => setUsersCity(e.target.value)} />
+
+          <div className="h-auto absolute w-[20em] bg-white z-10 rounded-md" >
+            {
+              suggestions.map(element => <p className="p-2 cursor-pointer hover:bg-stone-400" key={element.lat} onClick={onClickChangeCity} >{element.name}-{element.country}</p>)
+            }
+          </div>
+
+        </div>
         <button className="bg-white px-[15px] py-[2px] rounded-md" >Search</button>
       </form>
     }
