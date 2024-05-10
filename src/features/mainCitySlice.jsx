@@ -1,20 +1,22 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialValues = {
-    cityName: "new york",
-    // lat: null,
-    // lon: null,
+    cityName: "soledad",
+    countryCode: "VE",
     cityInfo: {},
     isLoading: false,
     error: "",
-}
+}   
 
 
-export const getMainCityInfo = createAsyncThunk("mainCity/getInfo", async (cityName, {dispatch, getState}) => {
+export const getMainCityInfo = createAsyncThunk("mainCity/getInfo", async ({cityName, countryCode} , {dispatch, getState}) => {
     const currentInfo = getState().mainCity;
+
     try{
-        const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=777755690ecb518be7c3410d5ae34b00`);
-        // const res = await fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&appid=777755690ecb518be7c3410d5ae34b00`);
+        // const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=777755690ecb518be7c3410d5ae34b00`);
+
+        const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName},${countryCode}&appid=777755690ecb518be7c3410d5ae34b00`);
+      
         
         if(res.status === 404) {
             alert(`${cityName} does not exist!`);
@@ -25,6 +27,7 @@ export const getMainCityInfo = createAsyncThunk("mainCity/getInfo", async (cityN
         
         const data = await res.json();
         return data;
+
     }catch(error){
         throw new Error(error);
     }
@@ -37,7 +40,8 @@ const mainCitySlice = createSlice({
     initialState: initialValues,
     reducers: {
         changeCity(state, action){
-            state.cityName = action.payload;
+            state.cityName = action.payload.cityName;
+            state.countryCode = action.payload.countryCode ;
         },
     },
     extraReducers: (builder) => {

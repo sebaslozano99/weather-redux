@@ -19,7 +19,7 @@ const OtherCitiesUi = () => {
 
 
   return (
-    <div className="w-[55%] h-full rounded-3xl grid grid-cols-2 auto-rows-[50%] gap-[1em] overflow-y-auto p-[10px] max-[1000px]:grid-cols-1 max-[1000px]:w-[45%] max-[800px]:w-full max-[800px]:grid max-[800px]:grid-cols-auto max-[800px]:grid-rows-[300px] max-[800px]:h-[90vh] max-[800px]:auto-rows-[300px]" >
+    <div className="w-[55%] h-full rounded-3xl grid grid-cols-2 auto-rows-[50%] gap-[1em] overflow-y-auto p-[10px] max-[1000px]:grid-cols-1 max-[1000px]:w-[45%] max-[800px]:w-full max-[800px]:grid max-[800px]:grid-cols-auto max-[800px]:grid-rows-[300px] max-[800px]:h-[90vh] max-[800px]:auto-rows-[300px] scrollbar" >
 
         {
           citiesInfo?.map(element => <div key={element.id} className={`border-[1px] rounded-xl ${theme ? "bg-black/30 text-white border-white/30" : "border-black/30"} p-1 flex flex-col justify-center items-center gap-4 shadow-xl shadow-black/10`}>

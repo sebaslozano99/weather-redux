@@ -6,20 +6,18 @@ import getRightImageBasedCode from "../utilities/getRightWeatherImg";
 
 
 const styles = {
-    bigCardTemp: "text-[3em] text-center font-semibold max-[1000px]:text-[2.5em] max-[800px]:text-[3em]",
+    bigCardTemp: "text-[3em] text-center font-semibold max-[1000px]:text-[2.5em] max-[800px]:text-[3em] max-[520px]:text-[2em]",
     smallCardTemp: "text-[1.4em] text-center font-semibold",
-    bigCityCountry: "text-5xl text-center font-thin mb-4 max-[1000px]:text-4xl max-[800px]:text-5xl",
+    bigCityCountry: "text-5xl text-center font-thin mb-4 max-[1000px]:text-4xl max-[800px]:text-5xl max-[520px]:text-3xl",
     smallCityCountry: "text-xl text-center font-thin mb-4",
-    bigTitle: "text-center font-semibold text-2xl max-[1000px]:text-xl max-[800px]:text-2xl",
+    bigTitle: "text-center font-semibold text-2xl max-[1000px]:text-xl max-[800px]:text-2xl max-[520px]:text-lg",
     smallTitle: "text-center font-semibold text-mds",
-    bigDesc: "text-center text-xl font-thin max-[1000px]:text-lg max-[800px]:text-xl",
+    bigDesc: "text-center text-xl font-thin max-[1000px]:text-lg max-[800px]:text-xl max-[520px]:text-base",
     smallDesc: "text-center text-sm font-thin",
   }
 
 
 const CityCardReusable = ({cityInfo, isLoading, tempType, countryType, titleType, descType, spinnerType, addBtn = false, handleAddToList}) => {
-
-
 
   const { temperatureType, theme } = UseTempContext();
   const rightTempType = temperatureType ? (cityInfo?.main?.temp - 273.15).toFixed(2) : ((cityInfo?.main?.temp - 273.15) * 9/5 + 32).toFixed(2);
@@ -39,8 +37,8 @@ const CityCardReusable = ({cityInfo, isLoading, tempType, countryType, titleType
 
             <div className="w-full h-[40%] flex">
 
-                <div className="w-[40%] flex items-center justify-center p-4">
-                    <img src={getRightImageBasedCode(cityInfo?.weather?.at(0)?.icon)} className="max-[800px]:w-[80%] max-[701px]:w-[70%]" />
+                <div className="w-[40%] flex items-center justify-center p-2">
+                    <img src={getRightImageBasedCode(cityInfo?.weather?.at(0)?.icon)} className="max-[800px]:w-[80%] max-[701px]:w-[70%] max-[520px]:w-[100%]" />
                 </div>
 
                 <div className="w-[60%] flex flex-col items-center justify-center">
