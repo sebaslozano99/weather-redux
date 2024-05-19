@@ -9,6 +9,7 @@ import Account from "./pages/Account";
 import Search from "./pages/Search";
 import Details from "./pages/Details";
 import { SuggestionsContext } from "./contexts/SuggestionsContext";
+import Footer from "./ui/Footer";
 
 
 
@@ -27,6 +28,7 @@ const App = () => {
               <Route path="search/:id" element={ <Details /> } />
               <Route path="account" element={ <Account /> } />
           </Routes>
+          <Footer />
         </SuggestionsContext>
       </TempContext>
     </BrowserRouter>

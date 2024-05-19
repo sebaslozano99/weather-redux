@@ -1,3 +1,7 @@
+// I already replaced this file with the suggestionsSlice using Redux JS
+
+
+
 import { createContext, useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 

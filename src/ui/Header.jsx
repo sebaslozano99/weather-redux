@@ -1,9 +1,11 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { changeCity } from "../features/mainCitySlice";
+import { changeCity } from "../features/mainCity/mainCitySlice";
 import { UseTempContext } from "../contexts/TempContext";
-import { UseSuggestions } from "../contexts/SuggestionsContext";
+import { getSuggestions } from "../features/suggestionsSlice";
+import { emptySuggestions, emptyUsersCity, typeUsersCity } from "../features/suggestionsSlice";
+// import { UseSuggestions } from "../contexts/SuggestionsContext";
 
 
 const Header = () => {
@@ -11,10 +13,20 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [displaySearchBar, setDisplaySearchBar] = useState(false);
   const { onChangeTempType, temperatureType, onChangeTheme, theme } = UseTempContext();
-  const { suggestions, suggestionLoading, setSuggestions, usersCity, setUsersCity } = UseSuggestions();
+  const { suggestions, suggestionsIsLoading, usersCity } = useSelector((store) => store.suggestions);
   const dispatch = useDispatch();
+  // const { suggestions, suggestionLoading, setSuggestions, usersCity, setUsersCity } = UseSuggestions(); --- I firstly build the suggestions/geocoding using useContext, but then replaced it with Redux to reinforce knowledge
 
 
+  useEffect(() => {
+    const promise = dispatch(getSuggestions(usersCity));
+
+    // return an anonymous function to cancel thunk and multiple requests as the user types
+    return () => {
+      promise.abort();
+    }
+  }, [dispatch, usersCity])
+  
 
   function onClickChangeCity(index){
     if(!usersCity) return; //if nothing on navBar, this does not work
@@ -24,11 +36,11 @@ const Header = () => {
     const rightCountry = suggestions?.at(index)?.country;
 
     dispatch(changeCity({ cityName: rightCityName, countryCode: rightCountry}));
-    setUsersCity("");
-    setSuggestions([]);
+    dispatch(emptySuggestions()); 
+    dispatch(emptyUsersCity());
+    // setUsersCity("");
+    // setSuggestions([]);
   }
-
-
 
   function handleOpenBurger(){
     setIsOpen(!isOpen);
@@ -38,7 +50,6 @@ const Header = () => {
     setDisplaySearchBar(trueOrFalse);
     setIsOpen(false);
   }
-
 
 
   return (
@@ -78,16 +89,18 @@ const Header = () => {
 
         <div >
 
-          <input type="text" placeholder="gatlinburg"  className="w-[20em] p-[5px] rounded-md outline-none relative border-[1px] border-black/50 max-[700px]:w-40" value={usersCity} onChange={(e) => setUsersCity(e.target.value)} />
+          <input type="text" placeholder="gatlinburg"  className="w-[20em] p-[5px] rounded-md outline-none relative border-[1px] border-black/50 max-[700px]:w-40" value={usersCity}  onChange={(e) => dispatch(typeUsersCity(e.target.value))} />
 
 
+          {/* BOX THAT CONTAINS ALL CITIES WITH THE SAME NAME  */}
           <div className="h-auto absolute w-[20em] bg-white z-10 rounded-md max-[700px]:w-40" >
 
-            { suggestionLoading && usersCity.length > 3 ? 
+            {/* { suggestionLoading ?  */}
+            { suggestionsIsLoading ? 
 
               <p>Loading...</p>
               :
-              suggestions.map((element, i) => <p className="p-2 cursor-pointer hover:bg-stone-400" key={element.lat + i} onClick={() => onClickChangeCity(i)} >{element.name}-{element.country}</p>)
+              suggestions?.map((element, i) => <p className="p-2 cursor-pointer hover:bg-stone-400" key={element.lat + i} onClick={() => onClickChangeCity(i)} >{element.name}-{element.country}</p>)
 
             }
 
@@ -127,7 +140,6 @@ const Header = () => {
           <span className={`block w-[25px] h-[2px] my-[5px] transition-all ease-in-out duration-300 ${isOpen && "rotate-[-45deg] translate-y-[-7px]"} ${theme ? "bg-white" : "bg-black"}`}></span>
 
         </div>
-
 
     </header>
   )

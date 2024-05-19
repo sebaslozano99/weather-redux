@@ -1,5 +1,5 @@
 import { UseTempContext } from "../contexts/TempContext"
-import MainCity from "../features/MainCity";
+import MainCity from "../features/mainCity/MainCity";
 
 
 

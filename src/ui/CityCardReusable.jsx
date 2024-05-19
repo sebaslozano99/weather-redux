@@ -20,8 +20,8 @@ const styles = {
 const CityCardReusable = ({cityInfo, isLoading, tempType, countryType, titleType, descType, spinnerType, addBtn = false, handleAddToList}) => {
 
   const { temperatureType, theme } = UseTempContext();
-  const rightTempType = temperatureType ? (cityInfo?.main?.temp - 273.15).toFixed(2) : ((cityInfo?.main?.temp - 273.15) * 9/5 + 32).toFixed(2);
-  const feelsLikeRightTempType = temperatureType ? (cityInfo?.main?.feels_like - 273.15).toFixed(2) : ((cityInfo?.main?.feels_like - 273.15) * 9/5 + 32).toFixed(2);
+  const rightTempType = temperatureType ? (cityInfo?.main?.temp - 273.15).toFixed(1) : ((cityInfo?.main?.temp - 273.15) * 9/5 + 32).toFixed(1);
+  const feelsLikeRightTempType = temperatureType ? (cityInfo?.main?.feels_like - 273.15).toFixed(1) : ((cityInfo?.main?.feels_like - 273.15) * 9/5 + 32).toFixed(1);
 
   return (
     < >

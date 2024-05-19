@@ -1,34 +1,73 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { UseTempContext } from "../contexts/TempContext";
+import { UseTempContext } from "../../contexts/TempContext";
 import { getMainCityInfo } from "./mainCitySlice";
-import { add } from "./otherCities";
-import CityCardReusable from "../ui/CityCardReusable";
-import OtherCitiesUi from "./OtherCitiesUi";
+import { add } from "../otherCities/otherCities";
+import CityCardReusable from "../../ui/CityCardReusable";
+import OtherCitiesUi from "../otherCities/OtherCitiesUi";
 
 
 const MainCity = () => {
+  // const [usersPos, setUsersPos] = useState({lat: null, lon: null});
   const { cityName, countryCode, cityInfo, isLoading } = useSelector((store) => store.mainCity);
   const { cities } = useSelector((store) => store.otherCities);
   const { theme } = UseTempContext();
   const dispatch = useDispatch();
 
-  
 
   useEffect(() => {
     dispatch(getMainCityInfo({cityName, countryCode}));
-  }, [dispatch, cityName, countryCode ]);
+  }, [dispatch, cityName, countryCode]);
+
+
+
+  // useEffect(() => {
+  //   function success(position){
+  //     setUsersPos({lat: position.coords.latitude, lon: position.coords.longitude});
+  //   }
+
+  //   function error(err) {
+  //     throw new Error(err);
+  //   }
+
+  //   navigator.geolocation.getCurrentPosition(success, error);
+
+  // }, [])
+
+
+  // useEffect(() => {
+  //   async function getCity(){
+  //     try{
+  //       const res = await fetch(`http://api.openweathermap.org/geo/1.0/reverse?lat=${usersPos.lat}&lon=${usersPos.lon}&limit=5&appid=777755690ecb518be7c3410d5ae34b00`);
+  //       const data = await res.json();
+  //       console.log(data);
+  //     }
+  //     catch(err){
+  //       throw new Error(err);
+  //     }
+  //   }
+
+  //   if(usersPos.lat && usersPos.lon){
+  //     getCity()
+  //   }
+
+  // }, [usersPos.lat, usersPos.lon])
+
+
 
 
 
   function handleAddToList(){
-    if(!cities.some(element => element.name === cityInfo?.name.toLowerCase()) && !cities.some(element => element.countryCode === cityInfo?.sys?.countryCode)){
+    if(!cities.some(element => element.name === cityInfo?.name.toLowerCase() && element.countryCode === cityInfo?.sys?.country)){
         dispatch(add({name: cityInfo?.name?.toLowerCase(), countryCode: cityInfo?.sys.country}));
     }
     else{
         alert(`city ${cityInfo?.name} - ${cityInfo?.sys.country} is already in your list!`);
     }
   }
+
+
+
 
 
 
