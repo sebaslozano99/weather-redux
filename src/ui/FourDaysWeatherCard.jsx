@@ -17,10 +17,8 @@ const FourDaysWeatherCard = ({element}) => {
     const { temperatureType, theme } = UseTempContext();
 
     const rightTempType = temperatureType ? (element?.main?.temp - 273.15).toFixed(1) : ((element?.main?.temp - 273.15) * 9/5 + 32).toFixed(1);
-    // const feelsLikeRightTempType = temperatureType ? (element?.main?.feels_like - 273.15).toFixed(1) : ((element?.main?.feels_like - 273.15) * 9/5 + 32).toFixed(1);
-
     const dayDate = element?.dt_txt;
-    const date = new Date(dayDate.slice(0, 4), dayDate.slice(5,7), dayDate.slice(8,10));
+    const date = new Date(dayDate.slice(0, 4), dayDate.slice(5,7) - 1, dayDate.slice(8,10));
 
 
 

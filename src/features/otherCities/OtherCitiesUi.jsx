@@ -13,6 +13,7 @@ const OtherCitiesUi = () => {
     const { theme } = UseTempContext();
     const dispatch = useDispatch();
 
+    
     useEffect(() => {
         dispatch(getOtherCities(cities));
     },[cities, dispatch]);

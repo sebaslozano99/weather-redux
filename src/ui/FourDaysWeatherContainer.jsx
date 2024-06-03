@@ -17,13 +17,12 @@ const FourDaysWeatherContainer = ({info}) => {
   const dispatch = useDispatch();
   const alsas = [4585, 1254, 6987, 2014];
 
-  console.log(fourWeatherForecastIsLoading, fourDaysWeatherToDisplay);
 
     
     
-      useEffect(() => {
-        dispatch(getFourDaysWwatherForecast({lat: info?.coord?.lat, lon: info?.coord?.lon}));
-      }, [dispatch, info?.coord?.lat, info?.coord?.lon])
+  useEffect(() => {
+    dispatch(getFourDaysWwatherForecast({lat: info?.coord?.lat, lon: info?.coord?.lon}));
+  }, [dispatch, info?.coord?.lat, info?.coord?.lon])
 
 
   return (

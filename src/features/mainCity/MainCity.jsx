@@ -54,9 +54,6 @@ const MainCity = () => {
   // }, [usersPos.lat, usersPos.lon])
 
 
-
-
-
   function handleAddToList(){
     if(!cities.some(element => element.name === cityInfo?.name.toLowerCase() && element.countryCode === cityInfo?.sys?.country)){
         dispatch(add({name: cityInfo?.name?.toLowerCase(), countryCode: cityInfo?.sys.country}));
@@ -65,11 +62,6 @@ const MainCity = () => {
         alert(`city ${cityInfo?.name} - ${cityInfo?.sys.country} is already in your list!`);
     }
   }
-
-
-
-
-
 
   return (
     <>

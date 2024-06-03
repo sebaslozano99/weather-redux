@@ -8,6 +8,9 @@ export default {
     extend: {
       gridTemplateColumns: {
         'auto': 'repeat(auto-fit, minmax(300px, 1fr))',
+      },
+      backgroundImage: {
+        "home-page-01": "url('../../public/cloudy-01')",
       }
     },
     fontFamily: {
