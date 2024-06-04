@@ -5,12 +5,28 @@ const MyAccount = () => {
   const { logOut, authLoading } = UseAuthContext();
 
   return (
-    <div className="w-full h-screen transition-all ease-in-out duration-300 border-2 border-red-500" >
-      My account
+    < >
+      
+      <aside className="w-3/12 h-full bg-white/50" >
+
+        <nav>
+          <ul>
+            <li>
+              Profile
+            </li>
+            <li>
+              My Cities
+            </li>
+            <li>
+              <button className="bg-white px-3 py-2" onClick={logOut} disabled={authLoading}>{authLoading ? "Loading..." : "Log out"}</button>
+            </li>
+          </ul>
+        </nav>
+
+      </aside>
 
 
-      <button className="bg-white px-3 py-2" onClick={logOut} disabled={authLoading} >{authLoading ? "Loading..." : "Log out"}</button>
-    </div>
+    </>
   )
 }
 

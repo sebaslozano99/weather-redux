@@ -37,7 +37,16 @@ const SignUp = () => {
 
     const { theme } = UseTempContext();
     const [{ email, password, confirm}, dispatch] = useReducer(reducer, initialState);
-    const { signUp, authLoading, error } = UseAuthContext();
+    const { user, signUp, authLoading, error } = UseAuthContext();
+
+
+    if(user) {
+        return(
+            <div className={`${theme ? "bg-[#252525]" : "bg-blue-500"} w-full h-screen transition-all ease-in-out duration-300 flex items-center justify-center flex-col`} >
+                <h2 className="text-2xl font-light" >There is an User already Logged in. Sing out and come back again!</h2>
+            </div>
+        )
+    }
 
   return (
 
@@ -77,19 +86,22 @@ const SignUp = () => {
 
         </form>
 
-        <button 
-            className="bg-white px-3 py-1 rounded mt-3" 
+
+        <div className="w-40 h-20 flex flex-col items-center mt-3">
+            <button 
+            className="bg-white px-3 py-1 rounded w-full" 
             disabled={authLoading}
             onClick={(e) => signUp(e, email, password, confirm)}
             >
-                { authLoading ? "Loading..." : "Sign up" }
-        </button>
+            { authLoading ? "Loading..." : "Log in" }
+            </button>
 
-        {
+            { 
             error && 
 
-            <p className={`${theme && "text-white"}`} >{error}</p>
-        }
+            <p  className={ theme && "text-white mt-3" } >{error}</p>
+            }
+        </div>
 
 
     </div>

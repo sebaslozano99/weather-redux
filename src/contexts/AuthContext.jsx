@@ -48,7 +48,7 @@ const AuthContext = ({children}) => {
     //listen to any auth changes such as sign in and sing out
     useEffect(() => {
         clientSupabase.auth.onAuthStateChange((event, session) => {
-            console.log(session, event);
+            // console.log(session, event);
             if(session) dispatch({type: "user/signIn", payload: session});
             if(!session) dispatch({type: "user/signOut"})
         })

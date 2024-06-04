@@ -9,8 +9,11 @@ const Account = () => {
   const { theme } = UseTempContext();
   const { user } = UseAuthContext();
 
+
+  console.log(user);
+
   return (
-    <div className={`${theme ? "bg-[#252525]" : "bg-blue-500"}`} >
+    <main className={`${theme ? "bg-[#252525]" : "bg-blue-500"} w-full h-[90vh]`} >
       {
         user ?
 
@@ -20,7 +23,7 @@ const Account = () => {
 
         <LogIn />
       }
-    </div>
+    </main>
   )
 }
 

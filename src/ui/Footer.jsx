@@ -10,7 +10,7 @@ const Footer = () => {
   return (
     <footer className={`${theme ? "bg-[#252525] text-white" : "bg-blue-500 text-black"} w-full h-16 flex items-center justify-center`} >
         <p className="font-thin"> 
-            CopyRight {date.getFullYear()}. All rights reserved codeWithAsla.
+            CopyRight {date.getFullYear()}.
             <em className="font-medium"> Powered by OpenWeather</em>
         </p>
     </footer>

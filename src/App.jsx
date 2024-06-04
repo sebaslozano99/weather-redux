@@ -12,6 +12,7 @@ import Search from "./pages/Search";
 import Details from "./pages/Details";
 import Footer from "./ui/Footer";
 import SignUp from "./pages/SignUp";
+import { CitiesContext } from "./contexts/CitiesContext";
 
 
 const App = () => {
@@ -22,6 +23,7 @@ const App = () => {
       <AuthContext>
         <TempContext>
           <SuggestionsContext>
+            <CitiesContext>
             <Header />
             <Routes>
                 <Route path="/" element={ <HomePage /> } />
@@ -33,6 +35,7 @@ const App = () => {
 
             </Routes>
             <Footer />
+            </CitiesContext>
           </SuggestionsContext>
         </TempContext>
       </AuthContext>

@@ -81,7 +81,7 @@ const Header = () => {
 
 
     <h1 className={`text-3xl font-bold ${theme ? "text-white" : "text-black"}`} >
-      <Link  to="/" onClick={() => setDisplaySearchBar(false)} >Mw</Link>
+      <Link  to="/" onClick={() => setDisplaySearchBar(false)} >Wise Weather</Link>
     </h1>
 
 

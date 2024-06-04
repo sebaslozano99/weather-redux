@@ -64,19 +64,21 @@ const LogIn = () => {
       </form>
 
 
-      <button 
-        className="bg-white px-3 py-1 rounded" 
-        disabled={authLoading}
-        onClick={(e) => logIn(e, email, password)}
-      >
-        { authLoading ? "Loading..." : "Log in" }
-      </button>
+      <div className="w-40 h-20 flex flex-col items-center">
+        <button 
+          className="bg-white px-3 py-1 rounded w-full" 
+          disabled={authLoading}
+          onClick={(e) => logIn(e, email, password)}
+        >
+          { authLoading ? "Loading..." : "Log in" }
+        </button>
 
-      { 
-        error && 
+        { 
+          error && 
 
-        <p>{error}</p>
-      }
+          <p  className={ theme && "text-white mt-3" } >{error}</p>
+        }
+      </div>
 
     </div>
   )
