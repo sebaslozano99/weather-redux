@@ -59,7 +59,7 @@ const LogIn = () => {
              required
              />
 
-             <p className={ `text-center my-2 ${theme ? "text-white" : "text-black"}` } >You don&apos;t have an account yet? <span className={`cursor-pointer text-white underline ${theme && "text-cyan-500"}`}><Link to="/signup">Sign up</Link></span></p>
+             <p className={ `text-center my-2 ${theme ? "text-white" : "text-black"}` } >You don&apos;t have an account yet? <span className={`cursor-pointer text-white underline ${theme ? "text-cyan-500" : ""}`}><Link to="/signup">Sign up</Link></span></p>
 
       </form>
 
@@ -76,7 +76,7 @@ const LogIn = () => {
         { 
           error && 
 
-          <p  className={ theme && "text-white mt-3" } >{error}</p>
+          <p  className={ theme ? "text-white mt-3" : "" } >{error}</p>
         }
       </div>
 

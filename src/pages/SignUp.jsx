@@ -52,7 +52,7 @@ const SignUp = () => {
 
     <div className={`${theme ? "bg-[#252525]" : "bg-blue-500"} w-full h-screen transition-all ease-in-out duration-300 flex items-center justify-center flex-col`} >
 
-        <h2 className={`mb-4 text-xl ${theme && "text-white"}`}>Sign Up</h2>
+        <h2 className={`mb-4 text-xl ${theme ? "text-white" : ""}`}>Sign Up</h2>
 
         <form className="w-[20em] h-auto" onSubmit={(e) => signUp(e, email, password, confirm)} >
 
@@ -99,7 +99,7 @@ const SignUp = () => {
             { 
             error && 
 
-            <p  className={ theme && "text-white mt-3" } >{error}</p>
+            <p  className={ theme ? "text-white mt-3" : "" } >{error}</p>
             }
         </div>
 

@@ -1,7 +1,7 @@
-import PropTypes from "prop-types";
 import { UseTempContext } from "../contexts/TempContext";
-import Spinner from "./Spinner";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import Spinner from "./Spinner";
 import getRightImageBasedCode from "../utilities/getRightWeatherImg";
 
 
@@ -21,7 +21,9 @@ const CityCardReusable = ({cityInfo, isLoading, tempType, countryType, titleType
 
   const { temperatureType, theme } = UseTempContext();
   const rightTempType = temperatureType ? (cityInfo?.main?.temp - 273.15).toFixed(1) : ((cityInfo?.main?.temp - 273.15) * 9/5 + 32).toFixed(1);
+
   const feelsLikeRightTempType = temperatureType ? (cityInfo?.main?.feels_like - 273.15).toFixed(1) : ((cityInfo?.main?.feels_like - 273.15) * 9/5 + 32).toFixed(1);
+
 
   return (
     < >
@@ -33,7 +35,7 @@ const CityCardReusable = ({cityInfo, isLoading, tempType, countryType, titleType
         :
 
         <>
-       { addBtn && <button className={`${theme ? "bg-white text-black" : "bg-[#252525] text-white"} w-6 h-6 rounded-[50%] absolute top-0 right-0 m-2 opacity-50 hover:opacity-100 transition-opacity ease-in duration-300`}  onClick={handleAddToList} >+</button>}
+       { addBtn && <button className={`${theme ? "bg-white text-black" : "bg-[#252525] text-white"} w-6 h-6 rounded-[50%] absolute top-0 right-0 m-2 opacity-50 hover:opacity-100 transition-opacity ease-in duration-300 ${isLoading ? "bg-red-500" : ""}`}  onClick={handleAddToList} disabled={isLoading} >+</button>}
 
             <div className="w-full h-[40%] flex">
 

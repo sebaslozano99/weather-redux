@@ -28,7 +28,7 @@ const Header = () => {
   }, [dispatch, usersCity])
   
 
-  function onClickChangeCity(index){
+  async function onClickChangeCity(index){
     if(!usersCity) return; //if nothing on navBar, this does not work
 
     //otherwise, since the city the user is searching might have the same name as others in different countries, he'll be able to click the right one -- to accomplish it, we'll save the cityName and countryCode from the array in the right position

@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
-import PropTypes from "prop-types";
-import { clientSupabase } from "../supabase/client";
+import { clientSupabase } from "../supabase/client"; 
 import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 
 
 const Auth = createContext();
@@ -40,7 +40,6 @@ function reducer(state, action){
 }
 
 const AuthContext = ({children}) => {
-
 
     const [{user,error,authLoading}, dispatch] = useReducer(reducer, initialState);
     const navigate = useNavigate();

@@ -21,23 +21,24 @@ const App = () => {
     <BrowserRouter>
 
       <AuthContext>
-        <TempContext>
-          <SuggestionsContext>
-            <CitiesContext>
-            <Header />
-            <Routes>
-                <Route path="/" element={ <HomePage /> } />
-                <Route path="search" element={ <Search /> } />
-                <Route path="search/:id" element={ <Details /> } />
-                <Route path="account" element={ <Account /> } />
-                <Route path="signup" element={ <SignUp /> } />
-                <Route path="about" element={ <p>About</p> } />
+        <CitiesContext>
+          <TempContext>
+            <SuggestionsContext>
 
-            </Routes>
-            <Footer />
-            </CitiesContext>
-          </SuggestionsContext>
-        </TempContext>
+              <Header />
+              <Routes>
+                  <Route path="/" element={ <HomePage /> } />
+                  <Route path="search" element={ <Search /> } />
+                  <Route path="search/:id" element={ <Details /> } />
+                  <Route path="account" element={ <Account /> } />
+                  <Route path="signup" element={ <SignUp /> } />
+                  <Route path="about" element={ <p>About</p> } />
+              </Routes>
+              <Footer />
+              
+            </SuggestionsContext>
+          </TempContext>
+        </CitiesContext>
       </AuthContext>
     </BrowserRouter>
   )
