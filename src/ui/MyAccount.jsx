@@ -1,11 +1,14 @@
 import { useEffect } from "react";
 import { UseAuthContext } from "../contexts/AuthContext";
 import { UseUserCitiesContext } from "../contexts/CitiesContext";
+import { NavLink, Outlet } from "react-router-dom";
+import { UseTempContext } from "../contexts/TempContext";
 
 const MyAccount = () => {
 
   const { logOut, authLoading, user } = UseAuthContext();
   const { dispatch } = UseUserCitiesContext();
+  const { theme } = UseTempContext();
 
   useEffect(() => {
     console.log(user?.user.id);
@@ -17,30 +20,31 @@ const MyAccount = () => {
    }
 
   return (
-    < >
+    <div className="w-full h-full flex">
       
-      <aside className="w-3/12 h-full bg-white/50" >
+      <aside className={`w-[15%] h-full p-5 ${!theme ? "bg-blue-600/20" : "bg-black/20"}`} >
 
-        <p>Welcome, <em className="text-red-500" >{user?.user.id}</em></p>
+        {/* <p className="text-base">User: <em className="font-bold" >{user?.user.id}</em></p> */}
 
-        <nav>
-          <ul>
+        <nav className="mt-4">
+          <ul className={`flex flex-col gap-4 text-base`} >
             <li>
-              Profile
+              <NavLink to="profile" className={`${theme ? "text-white": ""}`} >Profile</NavLink>
             </li>
             <li>
-              My Cities
+              <NavLink to="myCities" className={`${theme ? "text-white": ""}`} >My Cities</NavLink>
             </li>
-            <li>
-              <button className="bg-white px-3 py-2" onClick={onLogOut} disabled={authLoading}>{authLoading ? "Loading..." : "Log out"}</button>
-            </li>
+
+            <button className="bg-white w-20 rounded px-1 py-1" onClick={onLogOut} disabled={authLoading}>{authLoading ? "Loading..." : "Log out"}</button>
+            
           </ul>
         </nav>
 
       </aside>
 
+      <Outlet />
 
-    </>
+    </div>
   )
 }
 

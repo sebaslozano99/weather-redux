@@ -32,6 +32,11 @@ function reducer(state, action){
                 ...state,
                 userCities: [...state.userCities, action.payload]
             }
+        case "userCities/deleteCity":
+            return {
+                ...state,
+                userCities: [...state.userCities.filter(element => element.id !== action.payload)]
+            }
         case "userCities/emptyIt":
             return {
                 ...state,
@@ -64,14 +69,19 @@ const CitiesContext = ({children}) => {
   const { user } = UseAuthContext();
   const [{ userCities, userCitiesInfo, userIsLoading, userError}, dispatch] = useReducer(reducer, initialState);
 
-  useEffect(() => {
-    console.log(userCities);
-  }, [userCities])
+//   useEffect(() => {
+//     console.log(userIsLoading);
+//   }, [userIsLoading])
+
+//   useEffect(() => {
+//     console.log(userCitiesInfo);
+//   }, [userCitiesInfo])
 
     useEffect(() => {
-        getCitiesAndCountryCodes(user?.user.id);
-    }, [user])
+        getCitiesAndCountryCodes(user?.user.id)
+    }, [user?.user.id])
 
+    
     useEffect(() => {
         fetchCitiesOpenWeatherData(user, userCities);
     }, [user, userCities])
@@ -87,13 +97,11 @@ const CitiesContext = ({children}) => {
                 schema: "public",
             },
             (payload) => {
-                console.log(payload);
                 dispatch({type: "userCities/newTask", payload: {cities: payload?.new?.cities, country_code: payload?.new?.country_code} });
 
             }
         )
         .subscribe();
-
 
         return () => {
             channel.unsubscribe();
@@ -101,16 +109,19 @@ const CitiesContext = ({children}) => {
     }, [])
 
 
+
+    //fetch from the database all rows with "cities", "country_codes" and "id" function ----------------------
+
     async function getCitiesAndCountryCodes(user){
 
         if(!user) return;
 
+        dispatch({type: "userIsLoading/set", payload: true});
         try{
             const { data, error } = await clientSupabase
             .from("cities")
             .select("cities, country_code, id")
             .eq("user_id", user)
-            // .eq("user_id", user?.user.id)
     
             if(error){
                 dispatch({type: "error/setError", payload: error.description || error.message});
@@ -122,10 +133,19 @@ const CitiesContext = ({children}) => {
         }catch(error){
             throw new Error(error);
         }
+        finally{
+            dispatch({type: "userIsLoading/set", payload: false});
+        }
     }
 
+    //fetch from the database all rows with "cities", "country_codes" and "id" function ----------------------
+
+
+
+    // add new city function ---------------------------------
+
     async function addNewCity(city, country_code, user_id){
-        
+
         if(userCities.some((element) => element.cities === city && element.country_code === country_code)){
             alert(`The city ${city}-${country_code} is already in your list!`);
             return;
@@ -162,6 +182,54 @@ const CitiesContext = ({children}) => {
         }
     }
 
+    // add new city function ---------------------------------
+
+
+
+    // update city function ---------------------------------
+
+    async function updateCity(city, country_code, id){
+        try{
+            const { error } = clientSupabase
+            .from("cities")
+            .update({
+                cities: city,
+                country_code: country_code,
+            })
+            .eq("id", id)
+
+            if(error) throw new Error(error.message);
+        }
+        catch(error){
+            throw new Error(error);
+        }
+    }
+
+    // update city function ---------------------------------
+
+
+    // delete city function
+
+    async function deleteCity(id){
+        try{
+            const response = await clientSupabase
+            .from("cities")
+            .delete()
+            .eq("user_id", user?.user.id)
+            .eq("id", id)
+
+            console.log(response);
+
+            dispatch({type: "userCities/deleteCity", payload: id})
+        }
+        catch(error){
+            throw new Error(error);
+        }
+    }
+
+
+
+    // function to fetch weather data of all the cities ---------------------------------
 
     async function fetchCitiesOpenWeatherData(user, cities){
         if(!user || !cities.length) return;
@@ -182,12 +250,17 @@ const CitiesContext = ({children}) => {
 
     }
 
+    // function to fetch weather data of all the cities ---------------------------------
+
+
 
   return (
     <CitiesSupabase.Provider value={{
         userCities,
         userCitiesInfo,
         userIsLoading,
+        updateCity,
+        deleteCity,
         userError,
         addNewCity,
         dispatch

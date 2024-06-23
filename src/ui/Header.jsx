@@ -85,17 +85,17 @@ const Header = () => {
     </h1>
 
 
-    {displaySearchBar &&  <form className="flex gap-2" onSubmit={(e) => e.preventDefault()} >
+    {displaySearchBar &&  
+
+      <form  onSubmit={(e) => e.preventDefault()} >
 
         <div >
 
           <input type="text" placeholder="gatlinburg"  className="w-[20em] p-[5px] rounded-md outline-none relative border-[1px] border-black/50 max-[700px]:w-40" value={usersCity}  onChange={(e) => dispatch(typeUsersCity(e.target.value))} />
 
 
-          {/* BOX THAT CONTAINS ALL CITIES WITH THE SAME NAME  */}
           <div className="h-auto absolute w-[20em] bg-white z-10 rounded-md max-[700px]:w-40" >
 
-            {/* { suggestionLoading ?  */}
             { suggestionsIsLoading ? 
 
               <p>Loading...</p>
